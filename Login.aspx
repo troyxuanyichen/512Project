@@ -16,6 +16,7 @@
                     <asp:ControlParameter ControlID="EmailBox" Name="val1" PropertyName="Text" />
                 </SelectParameters>
             </asp:SqlDataSource>
+            <asp:HiddenField ID="HashPass" runat="server"/>
             <br />
 
             <asp:Label ID="EmailLabel" runat="server" Text="E-mail"></asp:Label>&nbsp
@@ -24,8 +25,9 @@
             <br />
             <br />
             <asp:Label ID="PswLabel" runat="server" Text="Pass Word"></asp:Label>&nbsp
-            <asp:TextBox ID="PswBox" TextMode="Password" runat="server"></asp:TextBox>
-            <asp:CheckBox ID="DisplayPsw" runat="server" OnCheckedChanged="DisplayPsw_CheckedChanged" Text="Display password" />
+            <asp:TextBox ID="PswBox" runat="server"></asp:TextBox>
+            <asp:CheckBox ID="DisplayPsw" runat="server" autopostback="true" OnCheckedChanged="DisplayPsw_CheckedChanged" Text="Display password" />
+            <br />
             <br />
             <br />
             <asp:Button ID="LoginBut" CssClass="button" runat="server" Text="Login" OnClick="LoginBut_Click" />
