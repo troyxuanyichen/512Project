@@ -1,0 +1,127 @@
+﻿body {
+    background-color: dimgray;
+}
+
+div.SmallPanel {
+    width: 500px;
+    height:400px;
+    margin: auto;
+    border: 1px solid;
+    border-radius: 10px;
+    overflow: auto;
+    background-color: white;
+    padding: 60px;
+    font-size: medium;
+    font-family: arial,sans-serif;
+    font-weight: 100;
+}
+
+div.ControlPanel {
+    width: 700px;
+    height: 500px;
+    margin: auto;
+    border: 1px solid;
+    border-radius: 10px;
+    overflow: auto;
+    background-color: white;
+    padding: 60px;
+    font-size: medium;
+    font-family: arial,sans-serif;
+    font-weight: 100;
+}
+
+.result {
+    border-collapse: collapse;
+    border-radius: 5px;
+    margin: auto;
+    width: 70%;
+}
+
+th {
+    border-bottom: 4px solid #9ea7af;
+    border-right: 1px solid #343a45;
+    padding: 25px;
+    color: white;
+    background-color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 100;
+}
+
+tr:nth-child(even) {
+    background: #CCC;
+}
+
+tr:nth-child(odd) {
+    background: #FFF;
+}
+
+tr:hover {
+    background: #5f606b;
+    color: #FFFFFF;
+}
+
+td {
+    padding: 20px;
+    padding-right: 40px;
+    margin: auto;
+    font-family: arial,Serif;
+    font-weight: bold;
+    text-align: center;
+    border-right: 1px solid #C1C3D1;
+}
+
+.label {
+    font-weight: 900;
+    font-size: 30px;
+    color: black;
+}
+
+.warning {
+    font-family: Arial;
+    color: red;
+}
+
+.button {
+    padding: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-collapse: collapse;
+    font-weight: bold;
+    font-style: normal;
+    font-size: large;
+    background-color: #246eb6;
+    color: white;
+    border-style: hidden;
+}
+
+    .button:hover {
+        cursor: pointer;
+        border: solid;
+        background-color:;
+    }
+
+.radioButtonList {
+    font-weight: bold;
+    border: solid;
+}
+
+    .radioButtonList input {
+        border: 3px solid #AAAAAA;
+    }
+
+        .radioButtonList input:hover {
+            cursor: pointer;
+        }
+
+    .radioButtonList label {
+        margin-left: 5px;
+        margin-right: 10px;
+    }
+
+        .radioButtonList label:hover {
+            cursor: pointer;
+        }
+
+    .radioButtonList span.selectedradio label {
+        color: #246eb6;
+    }
