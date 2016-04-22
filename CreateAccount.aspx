@@ -19,11 +19,7 @@
                 </InsertParameters>
             </asp:SqlDataSource>
 
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [User] WHERE (Email = @val4)">
-                <SelectParameters>
-                    <asp:ControlParameter ControlID="EmailInput" Name="val4" PropertyName="Text" />
-                </SelectParameters>
-            </asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>"></asp:SqlDataSource>
 
             <asp:HiddenField ID="HashPass" runat="server" />
             <br />

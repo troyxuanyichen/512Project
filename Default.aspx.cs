@@ -15,28 +15,26 @@ public partial class _Default : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         Comment.Visible = false;
-
-            if (User.Identity.IsAuthenticated)
+        if (User.Identity.IsAuthenticated)
+        {
+            UserPanel.Visible = true;
+            VisitorPanel.Visible = false;
+            if (ProfileExist())
             {
-                UserPanel.Visible = true;
-                VisitorPanel.Visible = false;
-                if (ProfileExist())
-                {
-                    CrtProBut.Visible = false;
-                    EditProfilBut.Visible = true;
-                }
-                else
-                {
-                    CrtProBut.Visible = true;
-                    EditProfilBut.Visible = false;
-                }
+                CrtProBut.Visible = false;
+                EditProfilBut.Visible = true;
             }
             else
             {
-                UserPanel.Visible = false;
-                VisitorPanel.Visible = true;
+                CrtProBut.Visible = true;
+                EditProfilBut.Visible = false;
             }
-        
+        }
+        else
+        {
+            UserPanel.Visible = false;
+            VisitorPanel.Visible = true;
+        }
     }
 
     //login button
@@ -47,29 +45,25 @@ public partial class _Default : System.Web.UI.Page
 
     protected void CrtProBut_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Profile.aspx?Id=" + uid + "&Action=create");
+        Response.Redirect("Profile.aspx?Id=" + uid + "&action=create");
     }
 
     protected void CrtAccBut_Click(object sender, EventArgs e)
     {
-        if (true)
-        {
-            Response.Redirect("CreateAccount.aspx?Action=create");
-        }
+        Response.Redirect("CreateAccount.aspx");
     }
 
     protected void SignoutBut_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
-        //UserPanel.Visible = false;
-        //VisitorPanel.Visible = true;
     }
 
     protected bool ProfileExist()
     {
         HttpCookie cookie = Request.Cookies["UserInfo"];
-        SqlDataSource1.SelectCommand = "SELECT ProfileId, Email, UsrId, Name, DOB, Address, Telephone, Gender FROM Profile WHERE (UsrId = @val1)";
-        SqlDataSource1.SelectParameters.Add("val1", cookie["Id"].ToString());
+        Parameter p = SqlDataSource1.SelectParameters["uid"];
+        SqlDataSource1.SelectParameters.Remove(p);
+        SqlDataSource1.SelectParameters.Add("uid", cookie["Id"]);
         DataView dv = (DataView)SqlDataSource1.Select(DataSourceSelectArguments.Empty);
         if (dv.Table.Rows.Count == 0)
         {
@@ -83,6 +77,7 @@ public partial class _Default : System.Web.UI.Page
 
     protected void DltAccBut_Click(object sender, EventArgs e)
     {
+        /*
         //delete profile
         try
         {
@@ -105,15 +100,16 @@ public partial class _Default : System.Web.UI.Page
         }
         Comment.Visible = true;
         Comment.Text = "Delete successful!";
+        */
     }
 
     protected void EditProfileBut_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Profile.aspx?Id=" + uid + "&Action=edit");
+        Response.Redirect("Profile.aspx?id=" + uid + "&action=edit");
     }
 
     protected void EditAccountBut_Click(object sender, EventArgs e)
     {
-        Response.Redirect("CreateAccount.aspx?Action=edit&Id=" + uid);
+        Response.Redirect("CreateAccount.aspx");
     }
 }

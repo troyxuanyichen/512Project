@@ -6,6 +6,7 @@
 <head runat="server">
     <title>Login</title>
     <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="avatar.jpg" />
 </head>
 <body>
     <form id="form1" runat="server">

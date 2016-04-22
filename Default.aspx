@@ -11,9 +11,9 @@
 <body>
     <form id="form1" runat="server">
         <div class="ControlPanel">
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" DeleteCommand="DELETE FROM Profile WHERE (UsrId = @val1)">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" DeleteCommand="DELETE FROM Profile WHERE (UsrId = @val2)" SelectCommand="SELECT [User].* FROM [User] WHERE (UsrId=@uid)">
             </asp:SqlDataSource>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [User]" DeleteCommand="DELETE FROM [User] WHERE (UsrId = @val1)"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [User]" DeleteCommand="DELETE FROM [User] WHERE (UsrId = @val3)"></asp:SqlDataSource>
             <asp:Panel ID="VisitorPanel" runat="server">
                 <asp:Button ID="SigninBut" runat="server" Text="Sign in" OnClick="SigninBut_Click" />
                 <asp:Button ID="CrtAccBut" runat="server" Text="Create Account" OnClick="CrtAccBut_Click" />

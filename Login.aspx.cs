@@ -66,7 +66,7 @@ public partial class Login : System.Web.UI.Page
                 System.Diagnostics.Debug.Print("hashpass " + HashPass.Value);
                 if (tempPass == HashPass.Value)
                 {
-                    //authenticated
+                    //authenticated password should not be stored in cookie
                     HttpCookie cookie = new HttpCookie("UserInfo");
                     cookie["Name"] = tempName;
                     cookie["Email"] = tempEmail;

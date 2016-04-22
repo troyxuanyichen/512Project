@@ -16,12 +16,17 @@ public partial class CreateAccount : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        action = Request.QueryString["Action"];
-        if (action == "edit")
+        action = Request.QueryString["action"];
+        if (User.Identity.IsAuthenticated)
         {
-
+            //already login edit account use datasource to display all the information of the user
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            SqlDataSource2.SelectCommand = "SELECT * FROM [User] WHERE (Email = @val4)";
+            SqlDataSource2.SelectParameters.Add("val4", cookie["Email"]);
+            DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
+            UsrNameInput.Text = (string)dv.Table.Rows[0]["UsrName"];
+            EmailInput.Text = (string)dv.Table.Rows[0]["Email"];
         }
-
     }
 
     protected void SavBut_Click(object sender, EventArgs e)
@@ -61,39 +66,24 @@ public partial class CreateAccount : System.Web.UI.Page
         }
         else
         {
+            SqlDataSource1.Insert();
+            //get user infor for cookie
+            /*
+            DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
+            */
+            updateDataTable();
+            DataRow row = dataTable.Rows[0];
+            string tempName = (string)row["UsrName"];
+            string tempEmail = (string)row["Email"];
+            string tempId = row["UsrId"].ToString();
+            HttpCookie cookie = new HttpCookie("UserInfo");
+            cookie["Name"] = tempName;
+            cookie["Email"] = tempEmail;
+            cookie["Id"] = tempId;
+            Response.Cookies.Add(cookie);
+            //Response.Redirect("Default.aspx?login=true&Id=" + uid);
+            FormsAuthentication.RedirectFromLoginPage(tempEmail, true);
 
-            if (action == "create")
-            {
-                SqlDataSource1.Insert();
-                //get user infor for cookie
-                /*
-                DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
-                */
-                updateDataTable();
-                DataRow row = dataTable.Rows[0];
-                string tempName = (string)row["UsrName"];
-                string tempEmail = (string)row["Email"];
-                string tempId = row["UsrId"].ToString();
-                HttpCookie cookie = new HttpCookie("UserInfo");
-                cookie["Name"] = tempName;
-                cookie["Email"] = tempEmail;
-                cookie["Id"] = tempId;
-                Response.Cookies.Add(cookie);
-                //Response.Redirect("Default.aspx?login=true&Id=" + uid);
-                FormsAuthentication.RedirectFromLoginPage(tempEmail, true);
-            }
-            else //modify
-            {
-                /*
-                SqlDataSource1.UpdateCommand = "UPDATE [user] (UsrName, Password, Email) VALUES(@val1, @val2, @val3) WHERE (UsrId=@val4) ";
-                SqlDataSource1.UpdateParameters.Add("val1", userName);
-                SqlDataSource1.UpdateParameters.Add("val2", password);
-                SqlDataSource1.UpdateParameters.Add("val3", email);
-                SqlDataSource1.UpdateParameters.Add("val4", uid);
-                Response.Redirect("Default.aspx?login=true&Id=" + uid);
-                //update success? comment or redirect
-                */
-            }
         }
 
     }
