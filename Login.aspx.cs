@@ -13,7 +13,7 @@ public partial class Login : System.Web.UI.Page
     private static DataTable dataTable;
     protected void Page_Load(object sender, EventArgs e)
     {
-        PswBox.MaxLength = 6;
+        
         if (!Page.IsPostBack)
         {
             PswBox.Attributes["type"] = "password";

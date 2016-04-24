@@ -45,7 +45,7 @@ public partial class _Default : System.Web.UI.Page
 
     protected void CrtProBut_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Profile.aspx?Id=" + uid + "&action=create");
+        Response.Redirect("ViewProfile.aspx?id=" + uid + "&action=create");
     }
 
     protected void CrtAccBut_Click(object sender, EventArgs e)
@@ -56,16 +56,15 @@ public partial class _Default : System.Web.UI.Page
     protected void SignoutBut_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
+        //must click twice
     }
 
     protected bool ProfileExist()
     {
         HttpCookie cookie = Request.Cookies["UserInfo"];
-        Parameter p = SqlDataSource1.SelectParameters["uid"];
-        SqlDataSource1.SelectParameters.Remove(p);
-        SqlDataSource1.SelectParameters.Add("uid", cookie["Id"]);
+        HiddenField1.Value = cookie["Id"];
         DataView dv = (DataView)SqlDataSource1.Select(DataSourceSelectArguments.Empty);
-        if (dv.Table.Rows.Count == 0)
+        if (dv == null)
         {
             return false;
         }
