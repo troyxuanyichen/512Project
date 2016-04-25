@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
+
 
 public partial class _Default : System.Web.UI.Page
 {
@@ -63,15 +65,19 @@ public partial class _Default : System.Web.UI.Page
 
     protected void DltAccBut_Click(object sender, EventArgs e)
     {
-        if (ProfileExist())
+        DialogResult result1 = MessageBox.Show("Are you sure to delete your account?", "Confirm", MessageBoxButtons.YesNo);
+        if (result1 == DialogResult.OK)
         {
-            SqlDataSource2.Delete();
+            if (ProfileExist())
+            {
+                SqlDataSource2.Delete();
+            }
+            SqlDataSource1.Delete();
+            Comment.Visible = true;
+            Comment.Text = "Delete successful!";
+            FormsAuthentication.SignOut();
+            FormsAuthentication.RedirectToLoginPage();
         }
-        SqlDataSource1.Delete();
-        Comment.Visible = true;
-        Comment.Text = "Delete successful!";
-        FormsAuthentication.SignOut();
-        FormsAuthentication.RedirectToLoginPage();
     }
 
     protected void EditProfileBut_Click(object sender, EventArgs e)
@@ -95,11 +101,13 @@ public partial class _Default : System.Web.UI.Page
     protected void DltProfileBut_Click(object sender, EventArgs e)
     {
         //Delete the profile
-        //DialogResult result1 = MessageBox.Show("Are you sure to delete your profile?","Confirm",
-    //MessageBoxButtons.YesNo);
-        SqlDataSource2.Delete();
-        Comment.Visible = true;
-        Comment.Text = "Your profile has been deleted!";
+        DialogResult result1 = MessageBox.Show("Are you sure to delete your profile?", "Confirm", MessageBoxButtons.YesNo);
+        if (result1 == DialogResult.OK)
+        {
+            SqlDataSource2.Delete();
+            Comment.Visible = true;
+            Comment.Text = "Your profile has been deleted!";
+        }
         //update button
     }
 

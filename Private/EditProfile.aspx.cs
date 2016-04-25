@@ -145,7 +145,8 @@ public partial class EditProfile : System.Web.UI.Page
                     SqlDataSource1.UpdateParameters.Add("EmailUpdate", HiddenEmail.Value);
                     SqlDataSource1.Update();
                 }
-                Comment.Text = "Your profile was saved successfully!";
+                Comment.Text = "Your profile was saved successfully! Your will be redirect to the default page after 5 seconds";
+                Response.AddHeader("REFRESH", "5;URL=../Default.aspx");
             }
         }
     }
