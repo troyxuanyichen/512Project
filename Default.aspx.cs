@@ -10,8 +10,6 @@ using System.Web.UI.WebControls;
 
 public partial class _Default : System.Web.UI.Page
 {
-    private static string uid;
-
     protected void Page_Load(object sender, EventArgs e)
     {
         Comment.Visible = false;
@@ -22,12 +20,16 @@ public partial class _Default : System.Web.UI.Page
             if (ProfileExist())
             {
                 CrtProBut.Visible = false;
-                EditProfilBut.Visible = true;
+                EditProfileBut.Visible = true;
+                DltProfileBut.Visible = true;
+                ViewProfileBut.Visible = true;
             }
             else
             {
                 CrtProBut.Visible = true;
-                EditProfilBut.Visible = false;
+                EditProfileBut.Visible = false;
+                DltProfileBut.Visible = false;
+                ViewProfileBut.Visible = false;
             }
         }
         else
@@ -37,7 +39,6 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
-    //login button
     protected void SigninBut_Click(object sender, EventArgs e)
     {
         Response.Redirect("Login.aspx");
@@ -45,7 +46,7 @@ public partial class _Default : System.Web.UI.Page
 
     protected void CrtProBut_Click(object sender, EventArgs e)
     {
-        Response.Redirect("ViewProfile.aspx?id=" + uid + "&action=create");
+        Response.Redirect("~/Private/EditProfile.aspx?&action=create");
     }
 
     protected void CrtAccBut_Click(object sender, EventArgs e)
@@ -56,59 +57,70 @@ public partial class _Default : System.Web.UI.Page
     protected void SignoutBut_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
+        FormsAuthentication.RedirectToLoginPage();
         //must click twice
+    }
+
+    protected void DltAccBut_Click(object sender, EventArgs e)
+    {
+        if (ProfileExist())
+        {
+            SqlDataSource2.Delete();
+        }
+        SqlDataSource1.Delete();
+        Comment.Visible = true;
+        Comment.Text = "Delete successful!";
+        FormsAuthentication.SignOut();
+        FormsAuthentication.RedirectToLoginPage();
+    }
+
+    protected void EditProfileBut_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Private/EditProfile.aspx?&action=edit");
+    }
+
+    protected void EditAccountBut_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("CreateAccount.aspx");
+    }
+
+    protected void ViewProfileBut_Click(object sender, EventArgs e)
+    {
+        //direct to the public page
+        HttpCookie cookie = Request.Cookies["UserInfo"];
+        string emailTemp = cookie["Email"].ToString();
+        Response.Redirect("ViewProfile.aspx?email=" + emailTemp);
+    }
+
+    protected void DltProfileBut_Click(object sender, EventArgs e)
+    {
+        //Delete the profile
+        //DialogResult result1 = MessageBox.Show("Are you sure to delete your profile?","Confirm",
+    //MessageBoxButtons.YesNo);
+        SqlDataSource2.Delete();
+        Comment.Visible = true;
+        Comment.Text = "Your profile has been deleted!";
+        //update button
+    }
+
+    protected void ViewOtherProfileBut_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewProfile.aspx?email=" + UsrNameList.SelectedValue.ToString());
     }
 
     protected bool ProfileExist()
     {
         HttpCookie cookie = Request.Cookies["UserInfo"];
         HiddenField1.Value = cookie["Id"];
-        DataView dv = (DataView)SqlDataSource1.Select(DataSourceSelectArguments.Empty);
-        if (dv == null)
+        DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
+        DataTable dataTable = dv.ToTable();
+        foreach (DataRow row in dataTable.Rows)
         {
-            return false;
+            if (row["UsrId"].ToString() == HiddenField1.Value)
+            {
+                return true;
+            }
         }
-        else
-        {
-            return true;
-        }
-    }
-
-    protected void DltAccBut_Click(object sender, EventArgs e)
-    {
-        /*
-        //delete profile
-        try
-        {
-            SqlDataSource1.DeleteParameters.Add("val1", uid);
-            SqlDataSource1.Delete();
-        }
-        catch (SqlException ex)
-        {
-            System.Diagnostics.Debug.Print("Delete profile failed! " + ex.Message);
-        }
-        //delete account
-        try
-        {
-            SqlDataSource2.DeleteParameters.Add("val1", uid);
-            SqlDataSource2.Delete();
-        }
-        catch (SqlException ex)
-        {
-            System.Diagnostics.Debug.Print("Delete account failed! " + ex.Message);
-        }
-        Comment.Visible = true;
-        Comment.Text = "Delete successful!";
-        */
-    }
-
-    protected void EditProfileBut_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Profile.aspx?id=" + uid + "&action=edit");
-    }
-
-    protected void EditAccountBut_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("CreateAccount.aspx");
+        return false;
     }
 }
