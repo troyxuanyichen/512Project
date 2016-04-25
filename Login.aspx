@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Login</title>
-    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/StyleSheet.css" rel="~/css/stylesheet" type="text/css" />
     <link rel="icon" href="avatar.jpg" />
 </head>
 <body>
@@ -17,7 +17,7 @@
                     <asp:ControlParameter ControlID="EmailBox" Name="val1" PropertyName="Text" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:HiddenField ID="HashPass" runat="server"/>
+            <asp:HiddenField ID="HashPass" runat="server" />
             <br />
 
             <asp:Label ID="EmailLabel" runat="server" Text="E-mail"></asp:Label>&nbsp
@@ -27,7 +27,7 @@
             <br />
             <asp:Label ID="PswLabel" runat="server" Text="Pass Word"></asp:Label>&nbsp
             <asp:TextBox ID="PswBox" runat="server"></asp:TextBox>
-            <asp:CheckBox ID="DisplayPsw" runat="server" autopostback="true" OnCheckedChanged="DisplayPsw_CheckedChanged" Text="Display password" />
+            <asp:CheckBox ID="DisplayPsw" runat="server" AutoPostBack="true" OnCheckedChanged="DisplayPsw_CheckedChanged" Text="Display password" />
             <br />
             <br />
             <br />

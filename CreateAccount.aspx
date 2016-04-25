@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Your Account</title>
-    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="avatar.jpg" />
 </head>
 <body>

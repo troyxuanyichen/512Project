@@ -33,6 +33,7 @@ public partial class _Default : System.Web.UI.Page
                 DltProfileBut.Visible = false;
                 ViewProfileBut.Visible = false;
             }
+            Comment.Text = "Hi, " + Response.Cookies["UserInfo"]["Name"];
         }
         else
         {

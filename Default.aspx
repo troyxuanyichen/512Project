@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Main Page</title>
-    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="avatar.jpg" />
 </head>
 <body>
@@ -43,7 +43,7 @@
                 </asp:DropDownList>
             </asp:Panel>
             <br />
-            <asp:Label ID="Comment" runat="server" class="warning" Text="Hi" Visible="false"></asp:Label>
+            <asp:Label ID="Comment" runat="server" class="warning" Text="" Visible="false"></asp:Label>
         </div>
     </form>
 </body>
