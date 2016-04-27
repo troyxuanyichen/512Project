@@ -42,7 +42,7 @@
 
             <br />
             <br />
-            <asp:Label ID="Comment" runat="server" Text="" Visible="false"></asp:Label>
+            <asp:Label ID="Comment" class="warning" runat="server" Text="" Visible="false"></asp:Label>
 
         </div>
     </form>

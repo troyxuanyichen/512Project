@@ -16,6 +16,10 @@ public partial class ViewProfile : System.Web.UI.Page
         //should not use cookie
         string sessionId = this.Session.SessionID;
         HttpCookie cookie = Request.Cookies["sessionId"];
+        if (cookie == null)
+        {
+            Response.Redirect("Login.aspx");
+        }
         HiddenField1.Value = Request.QueryString["email"];
         DataView dv = (DataView)SqlDataSource1.Select(DataSourceSelectArguments.Empty);
         DataTable dataTable = dv.ToTable();

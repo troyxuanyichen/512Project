@@ -16,6 +16,10 @@ public partial class EditProfile : System.Web.UI.Page
     {
         string sessionId = this.Session.SessionID;
         HttpCookie cookie = Request.Cookies["sessionId"];
+        if (cookie == null)
+        {
+            Response.Redirect("Login.aspx");
+        }
         HiddenEmail.Value = cookie["Email"].ToString();
         action = Request.QueryString["action"];
         if (!Page.IsPostBack)
@@ -83,8 +87,6 @@ public partial class EditProfile : System.Web.UI.Page
         bool emptyItem = ((TelephoneInput.Text == string.Empty) || (AddressInput.Text == string.Empty));
         int telephoneTemp;
         bool invalidTelephone = ((TelephoneInput.Text.Length != 10) || (int.TryParse(TelephoneInput.Text, out telephoneTemp)));
-        System.Diagnostics.Debug.Print(invalidTelephone.ToString());
-        System.Diagnostics.Debug.Print(TelephoneInput.Text);
         if (emptyItem)
         {
             errorMes += "Please fill in all of the blank!<br />";

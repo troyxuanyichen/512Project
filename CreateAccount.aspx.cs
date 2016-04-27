@@ -18,6 +18,10 @@ public partial class CreateAccount : System.Web.UI.Page
             //already login edit account use datasource to display all the information of the user
             string sessionId = this.Session.SessionID;
             HttpCookie cookie = Request.Cookies["sessionId"];
+            if (cookie == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
             DataView dv = (DataView)SqlDataSource1.Select(DataSourceSelectArguments.Empty);
             dataTable = dv.ToTable();
             foreach (DataRow row in dataTable.Rows)

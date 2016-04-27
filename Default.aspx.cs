@@ -37,7 +37,7 @@ public partial class _Default : System.Web.UI.Page
             Comment.Visible = true;
             string sessionId = this.Session.SessionID;
             HttpCookie cookie = Request.Cookies["sessionId"];
-            System.Diagnostics.Debug.Print(Application["Count"].ToString());
+            //System.Diagnostics.Debug.Print(Application["Count"].ToString());
             Comment.Text = "Hi, " + cookie["Name"];
         }
         else
@@ -130,6 +130,10 @@ public partial class _Default : System.Web.UI.Page
     {
         string sessionId = this.Session.SessionID;
         HttpCookie cookie = Request.Cookies["sessionId"];
+        if(cookie == null)
+        {
+            Response.Redirect("Login.aspx");
+        }
         HiddenField1.Value = cookie["Id"];
         DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
         DataTable dataTable = dv.ToTable();

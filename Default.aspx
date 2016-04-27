@@ -35,7 +35,7 @@
 
             <div id="nameList" class="small-panel" runat="server">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Label ID="Comment" runat="server" class="warning" Text="" Visible="false"></asp:Label><br />
+                <asp:Label ID="Comment" class="warning" runat="server" Text="" Visible="false"></asp:Label><br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:DropDownList ID="UsrNameList" CssClass="dropdownlist" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource2" DataTextField="Name" DataValueField="Email">
                 </asp:DropDownList>            

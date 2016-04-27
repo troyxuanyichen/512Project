@@ -55,7 +55,7 @@
             &nbsp;<br />
             <asp:Button ID="RetBut" class="button" runat="server" Text="Return" OnClick="RetBut_Click" />
             <br />
-            &nbsp;<asp:Label ID="Comment" runat="server" Text=""></asp:Label>
+            &nbsp;<asp:Label ID="Comment" class="warning" runat="server" Text=""></asp:Label>
             <br />
         </div>
     </form>

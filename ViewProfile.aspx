@@ -37,7 +37,7 @@
             <br />
             <asp:Button ID="RetBut" class="button" runat="server" Text="Return" OnClick="RetBut_Click"/>
             &nbsp;<br />
-            &nbsp;<asp:Label ID="Comment" runat="server" Text="" Visible="false"></asp:Label>
+            &nbsp;<asp:Label ID="Comment" class="warning" runat="server" Text="" Visible="false"></asp:Label>
             <br />
         </div>
     </form>
