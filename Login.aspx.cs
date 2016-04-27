@@ -13,7 +13,7 @@ public partial class Login : System.Web.UI.Page
     private static DataTable dataTable;
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
         if (!Page.IsPostBack)
         {
             PswBox.Attributes["type"] = "password";
@@ -62,19 +62,27 @@ public partial class Login : System.Web.UI.Page
                 string tempName = (string)row["UsrName"];
                 string tempEmail = (string)row["Email"];
                 string tempId = row["UsrId"].ToString();
-                System.Diagnostics.Debug.Print("tempPass " + tempPass);
-                System.Diagnostics.Debug.Print("hashpass " + HashPass.Value);
                 if (tempPass == HashPass.Value)
                 {
                     //authenticated password should not be stored in cookie
-                    HttpCookie cookie = new HttpCookie("UserInfo");
+                    //ASP.NET_SessionId
+                    string sessionId = this.Session.SessionID;
+                    HttpCookie cookie = new HttpCookie("sessionId");
                     cookie["Name"] = tempName;
                     cookie["Email"] = tempEmail;
                     cookie["Id"] = tempId;
                     Response.Cookies.Add(cookie);
                     Comment.Text = "Login success! Redirect to the main page in 5 second.";
                     System.Threading.Thread.Sleep(5000);
-                    FormsAuthentication.RedirectFromLoginPage(tempEmail, false);
+                    if (RememberMe.Checked == true)
+                    {
+                        FormsAuthentication.RedirectFromLoginPage(tempEmail, true);
+                    }
+                    else
+                    {
+                        FormsAuthentication.RedirectFromLoginPage(tempEmail, false);
+                    }
+
                     return;
                 }
                 else

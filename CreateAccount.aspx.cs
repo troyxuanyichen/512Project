@@ -16,7 +16,8 @@ public partial class CreateAccount : System.Web.UI.Page
         if (User.Identity.IsAuthenticated)
         {
             //already login edit account use datasource to display all the information of the user
-            HttpCookie cookie = Request.Cookies["UserInfo"];
+            string sessionId = this.Session.SessionID;
+            HttpCookie cookie = Request.Cookies["sessionId"];
             DataView dv = (DataView)SqlDataSource1.Select(DataSourceSelectArguments.Empty);
             dataTable = dv.ToTable();
             foreach (DataRow row in dataTable.Rows)
@@ -72,7 +73,8 @@ public partial class CreateAccount : System.Web.UI.Page
         if (User.Identity.IsAuthenticated)
         {
             //email already belong to other user
-            HttpCookie cookie = Request.Cookies["UserInfo"];
+            string sessionId = this.Session.SessionID;
+            HttpCookie cookie = Request.Cookies["sessionId"];
             foreach (DataRow row in dataTable.Rows)
             {
                 if ((row["Email"].ToString() == email) && (row["UsrId"].ToString() != cookie["Id"]))
@@ -106,7 +108,8 @@ public partial class CreateAccount : System.Web.UI.Page
         //can insert or update check empty
         if (User.Identity.IsAuthenticated)
         {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
+            string sessionId = this.Session.SessionID;
+            HttpCookie cookie = Request.Cookies["sessionId"];
             SqlDataSource1.UpdateCommand= "UPDATE [User] SET UsrName = @val4, Password = @val5, Email = @val6 WHERE (UsrId = @val7)";
             SqlDataSource1.UpdateParameters.Add("val4", userName);         
             SqlDataSource1.UpdateParameters.Add("val5", HashPass.Value);
@@ -123,8 +126,9 @@ public partial class CreateAccount : System.Web.UI.Page
         if (User.Identity.IsAuthenticated)
         {
             //update name and email
-            Response.Cookies["UserInfo"]["Name"] = userName;
-            Response.Cookies["UserInfo"]["Email"] = email;
+            string sessionId = this.Session.SessionID;
+            Response.Cookies["sessionId"]["Name"] = userName;
+            Response.Cookies["sessionId"]["Email"] = email;
             Comment.Text = "All change saved!";
             Response.Redirect("Default.aspx");
         }
@@ -134,7 +138,8 @@ public partial class CreateAccount : System.Web.UI.Page
             DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
             dataTable = dv.ToTable();
             DataRow row = dataTable.Rows[0];
-            HttpCookie cookie = new HttpCookie("UserInfo");
+            string sessionId = this.Session.SessionID;
+            HttpCookie cookie = new HttpCookie("sessionId");
             cookie["Name"] = row["UsrName"].ToString();
             cookie["Email"] = row["Email"].ToString();
             cookie["Id"] = row["UsrId"].ToString();

@@ -5,12 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Create Profile</title>
-    <link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
+    <link href="../css/StyleSheet.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="profile.png" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div class="main-panel">
             <br />
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT ProfileId, Email, UsrId, Name, DOB, Address, Telephone, Gender, Privacy FROM Profile WHERE (Email = @TempEmail)">
                 <SelectParameters>
@@ -33,14 +33,17 @@
             &nbsp;<asp:DropDownList ID="DayList" runat="server">
             </asp:DropDownList>
             <br />
+            <br />
             <asp:Label ID="GenderLabel" runat="server" Text="Gender"></asp:Label>
             &nbsp;<asp:DropDownList ID="GenderList" runat="server" AutoPostBack="true">
                 <asp:ListItem Value="M">Male</asp:ListItem>
                 <asp:ListItem Value="F">Female</asp:ListItem>
             </asp:DropDownList>
             <br />
+            <br />
             <asp:Label ID="TelephoneLabel" runat="server" Text="Telephone"></asp:Label>
             <asp:TextBox ID="TelephoneInput" runat="server" TextMode="Phone"></asp:TextBox>
+            <br />
             <br />
             <asp:Label ID="AddressLabel" runat="server" Text="Address" Style="vertical-align: top;"></asp:Label>
             <asp:TextBox ID="AddressInput" TextMode="MultiLine" runat="server"></asp:TextBox>
@@ -48,8 +51,9 @@
             <asp:CheckBox ID="PrivacyInput" runat="server" Text="Prevent others from seeing my profile" />
             <br />
             <br />
-            <asp:Button ID="SaveBut" runat="server" Text="Save" OnClick="SavBut_Click" />
-            &nbsp;<asp:Button ID="RetBut" runat="server" Text="Return" OnClick="RetBut_Click" />
+            <asp:Button ID="SaveBut" class="button" runat="server" Text="Save" OnClick="SavBut_Click" />
+            &nbsp;<br />
+            <asp:Button ID="RetBut" class="button" runat="server" Text="Return" OnClick="RetBut_Click" />
             <br />
             &nbsp;<asp:Label ID="Comment" runat="server" Text=""></asp:Label>
             <br />

@@ -14,7 +14,8 @@ public partial class EditProfile : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        HttpCookie cookie = Request.Cookies["UserInfo"];
+        string sessionId = this.Session.SessionID;
+        HttpCookie cookie = Request.Cookies["sessionId"];
         HiddenEmail.Value = cookie["Email"].ToString();
         action = Request.QueryString["action"];
         if (!Page.IsPostBack)

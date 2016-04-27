@@ -19,6 +19,7 @@ public partial class _Default : System.Web.UI.Page
         {
             UserPanel.Visible = true;
             VisitorPanel.Visible = false;
+            nameList.Visible = true;
             if (ProfileExist())
             {
                 CrtProBut.Visible = false;
@@ -33,12 +34,17 @@ public partial class _Default : System.Web.UI.Page
                 DltProfileBut.Visible = false;
                 ViewProfileBut.Visible = false;
             }
-            Comment.Text = "Hi, " + Response.Cookies["UserInfo"]["Name"];
+            Comment.Visible = true;
+            string sessionId = this.Session.SessionID;
+            HttpCookie cookie = Request.Cookies["sessionId"];
+            System.Diagnostics.Debug.Print(Application["Count"].ToString());
+            Comment.Text = "Hi, " + cookie["Name"];
         }
         else
         {
             UserPanel.Visible = false;
             VisitorPanel.Visible = true;
+            nameList.Visible = false;
         }
     }
 
@@ -60,6 +66,7 @@ public partial class _Default : System.Web.UI.Page
     protected void SignoutBut_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
+        Session.Abandon();
         FormsAuthentication.RedirectToLoginPage();
         //must click twice
     }
@@ -77,6 +84,7 @@ public partial class _Default : System.Web.UI.Page
             Comment.Visible = true;
             Comment.Text = "Delete successful!";
             FormsAuthentication.SignOut();
+            Session.Abandon();
             FormsAuthentication.RedirectToLoginPage();
         }
     }
@@ -94,7 +102,8 @@ public partial class _Default : System.Web.UI.Page
     protected void ViewProfileBut_Click(object sender, EventArgs e)
     {
         //direct to the public page
-        HttpCookie cookie = Request.Cookies["UserInfo"];
+        string sessionId = this.Session.SessionID;
+        HttpCookie cookie = Request.Cookies["sessionId"];
         string emailTemp = cookie["Email"].ToString();
         Response.Redirect("ViewProfile.aspx?email=" + emailTemp);
     }
@@ -119,7 +128,8 @@ public partial class _Default : System.Web.UI.Page
 
     protected bool ProfileExist()
     {
-        HttpCookie cookie = Request.Cookies["UserInfo"];
+        string sessionId = this.Session.SessionID;
+        HttpCookie cookie = Request.Cookies["sessionId"];
         HiddenField1.Value = cookie["Id"];
         DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
         DataTable dataTable = dv.ToTable();

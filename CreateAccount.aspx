@@ -5,13 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Your Account</title>
-    <link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />
+    <link href="css/StyleSheet.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="avatar.jpg" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-
+        <div class="main-panel">
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [User].* FROM [User]" InsertCommand="INSERT INTO [User] (UsrName, Password, Email) VALUES (@val1, @val2, @val3)">
                 <InsertParameters>
                     <asp:ControlParameter ControlID="UsrNameInput" Name="val1" PropertyName="Text" />
@@ -32,15 +31,19 @@
             <asp:Label ID="UsrNameLabel" runat="server" Text="User Name"></asp:Label>
             <asp:TextBox ID="UsrNameInput" runat="server" Width="128px"></asp:TextBox>
             <br />
+            <br />
             <asp:Label ID="PswLabel" runat="server" Text="Pass word"></asp:Label>
             <asp:TextBox ID="PswInput" runat="server" TextMode="Password" Width="128px"></asp:TextBox>
+            <br />
             <br />
             <asp:Label ID="EmailLabel" runat="server" Text="E-mail"></asp:Label>
             <asp:TextBox ID="EmailInput" runat="server" Width="128px"></asp:TextBox>
             <br />
-            <asp:Button ID="SavBut" CssClass="button" runat="server" Text="Save" OnClick="SavBut_Click" />
+            <br />
+            <asp:Button ID="SavBut" class="button" runat="server" Text="Save" OnClick="SavBut_Click" />
 
-            &nbsp;<asp:Button ID="BackBut" runat="server" Text="Back" OnClick="BackBut_Click" />
+            &nbsp;<br />
+            <asp:Button ID="BackBut" class="button" runat="server" Text="Back" OnClick="BackBut_Click" />
 
             <br />
             <asp:Label ID="Comment" runat="server" Text="" Visible="false"></asp:Label>
