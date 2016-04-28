@@ -30,7 +30,9 @@ public partial class CreateAccount : System.Web.UI.Page
                 {
                     if (!IsPostBack)
                     {
-                        UsrNameInput.Text = row["UsrName"].ToString();
+                        FirstNameInput.Text = row["FirstName"].ToString();
+                        MiddleNameInput.Text = row["MiddleName"].ToString();
+                        LastNameInput.Text = row["LastName"].ToString();
                         EmailInput.Text = row["Email"].ToString();
                         break;
                     }
@@ -42,12 +44,14 @@ public partial class CreateAccount : System.Web.UI.Page
     protected void SavBut_Click(object sender, EventArgs e)
     {
         Comment.Visible = true;
-        string userName = UsrNameInput.Text;
+        string firstName = FirstNameInput.Text;
+        string middleName = MiddleNameInput.Text;
+        string lastName = LastNameInput.Text;
         string password = PswInput.Text;
         string email = EmailInput.Text; //emailInput.text doesn't change
         string errMessage = "Save Failed!<br />";
         //emtpy item
-        if ((UsrNameInput.Text == string.Empty) || (PswInput.Text == string.Empty) || (EmailInput.Text == string.Empty))
+        if ((FirstNameInput.Text == string.Empty) || (LastNameInput.Text == string.Empty) || (PswInput.Text == string.Empty) || (EmailInput.Text == string.Empty))
         {
             errMessage += "Please fill in all of the item!";
             Comment.Text = errMessage;
@@ -114,11 +118,13 @@ public partial class CreateAccount : System.Web.UI.Page
         {
             string sessionId = this.Session.SessionID;
             HttpCookie cookie = Request.Cookies["sessionId"];
-            SqlDataSource1.UpdateCommand= "UPDATE [User] SET UsrName = @val4, Password = @val5, Email = @val6 WHERE (UsrId = @val7)";
-            SqlDataSource1.UpdateParameters.Add("val4", userName);         
-            SqlDataSource1.UpdateParameters.Add("val5", HashPass.Value);
-            SqlDataSource1.UpdateParameters.Add("val6", email);
-            SqlDataSource1.UpdateParameters.Add("val7", cookie["Id"]);
+            SqlDataSource1.UpdateCommand= "UPDATE [User] SET FirstName = @val6, MiddleName = @val7, LastName = @val8, Password = @val9, Email = @val10 WHERE (UsrId = @val11)";
+            SqlDataSource1.UpdateParameters.Add("val6", firstName);
+            SqlDataSource1.UpdateParameters.Add("val7", middleName);
+            SqlDataSource1.UpdateParameters.Add("val8", lastName);
+            SqlDataSource1.UpdateParameters.Add("val9", HashPass.Value);
+            SqlDataSource1.UpdateParameters.Add("val10", email);
+            SqlDataSource1.UpdateParameters.Add("val11", cookie["Id"]);
             SqlDataSource1.Update();
         }
         else
@@ -131,21 +137,22 @@ public partial class CreateAccount : System.Web.UI.Page
         {
             //update name and email
             string sessionId = this.Session.SessionID;
-            Response.Cookies["sessionId"]["Name"] = userName;
+            Response.Cookies["sessionId"]["Name"] = firstName + " " + lastName;
             Response.Cookies["sessionId"]["Email"] = email;
             Comment.Text = "All change saved!";
             Response.Redirect("Default.aspx");
         }
         else
         {
+            //insert
             //try to get the user Id
             DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
             dataTable = dv.ToTable();
             DataRow row = dataTable.Rows[0];
             string sessionId = this.Session.SessionID;
             HttpCookie cookie = new HttpCookie("sessionId");
-            cookie["Name"] = row["UsrName"].ToString();
-            cookie["Email"] = row["Email"].ToString();
+            cookie["Name"] = firstName + " " + lastName;
+            cookie["Email"] = email;
             cookie["Id"] = row["UsrId"].ToString();
             //have the id
             Response.Cookies.Add(cookie);

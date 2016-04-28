@@ -1,18 +1,18 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewProfile.aspx.cs" Inherits="ViewProfile" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="~/Private/ViewProfile.aspx.cs" Inherits="ViewProfile" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>View Profile</title>
-    <link href="css/StyleSheet.css" rel="stylesheet" type="text/css" />
+    <link href="../css/StyleSheet.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="avatar.jpg" />
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="main-panel">
             <br />
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT ProfileId, Email, UsrId, Name, DOB, Address, Telephone, Gender, Privacy FROM Profile WHERE (Email = @val1)">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT Email, UsrId, DOB, State, City, Street, Telephone, Gender, Privacy FROM Profile WHERE (Email = @val1)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="HiddenField1" Name="val1" PropertyName="Value" />
                 </SelectParameters>
@@ -30,8 +30,16 @@
                 <asp:Label ID="TelephoneLabel" runat="server" Text="Telephone"></asp:Label>
                 <asp:TextBox ID="Telephone" ReadOnly="true" runat="server"></asp:TextBox>
                 <br />
-                <asp:Label ID="AddressLabel" runat="server" Text="Address" Style="vertical-align: top;"></asp:Label>
-                <asp:TextBox ID="Address" TextMode="MultiLine" ReadOnly="true" runat="server"></asp:TextBox>
+                <br />
+                <asp:Label ID="StateLabel" runat="server" Text="State"></asp:Label>
+                &nbsp;<asp:TextBox ID="State" runat="server" ReadOnly="true"></asp:TextBox>
+                &nbsp;&nbsp;
+                <asp:Label ID="CityLabel" runat="server" Text="City"></asp:Label>
+                &nbsp;<asp:TextBox ID="City" runat="server" ReadOnly="true"></asp:TextBox>
+                <br />
+                <br />
+                <asp:Label ID="StreetLabel" runat="server" Text="Street" Style="vertical-align: top;"></asp:Label>
+                <asp:TextBox ID="Street" TextMode="MultiLine" ReadOnly="true" runat="server"></asp:TextBox>
             </asp:Panel>
             <br />
             <br />

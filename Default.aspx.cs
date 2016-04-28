@@ -37,6 +37,7 @@ public partial class _Default : System.Web.UI.Page
             Comment.Visible = true;
             string sessionId = this.Session.SessionID;
             HttpCookie cookie = Request.Cookies["sessionId"];
+            HiddenField1.Value = cookie["Id"];
             //System.Diagnostics.Debug.Print(Application["Count"].ToString());
             Comment.Text = "Hi, " + cookie["Name"];
         }
@@ -73,8 +74,8 @@ public partial class _Default : System.Web.UI.Page
 
     protected void DltAccBut_Click(object sender, EventArgs e)
     {
-        DialogResult result1 = MessageBox.Show("Are you sure to delete your account?", "Confirm", MessageBoxButtons.YesNo);
-        if (result1 == DialogResult.OK)
+        DialogResult result1 = MessageBox.Show("Are you sure to delete your account along with the profile?", "Confirm", MessageBoxButtons.YesNo);
+        if (result1 == DialogResult.Yes)
         {
             if (ProfileExist())
             {
@@ -105,25 +106,26 @@ public partial class _Default : System.Web.UI.Page
         string sessionId = this.Session.SessionID;
         HttpCookie cookie = Request.Cookies["sessionId"];
         string emailTemp = cookie["Email"].ToString();
-        Response.Redirect("ViewProfile.aspx?email=" + emailTemp);
+        Response.Redirect("Private/ViewProfile.aspx?email=" + emailTemp);
     }
 
     protected void DltProfileBut_Click(object sender, EventArgs e)
     {
         //Delete the profile
         DialogResult result1 = MessageBox.Show("Are you sure to delete your profile?", "Confirm", MessageBoxButtons.YesNo);
-        if (result1 == DialogResult.OK)
+        if (result1 == DialogResult.Yes)
         {
             SqlDataSource2.Delete();
             Comment.Visible = true;
             Comment.Text = "Your profile has been deleted!";
+            Response.AddHeader("REFRESH", "5;URL=Default.aspx");
         }
-        //update button
+        //update button?
     }
 
     protected void ViewOtherProfileBut_Click(object sender, EventArgs e)
     {
-        Response.Redirect("ViewProfile.aspx?email=" + UsrNameList.SelectedValue.ToString());
+        Response.Redirect("Private/ViewProfile.aspx?email=" + UsrNameList.SelectedValue.ToString());
     }
 
     protected bool ProfileExist()

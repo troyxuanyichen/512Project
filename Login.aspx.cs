@@ -59,13 +59,23 @@ public partial class Login : System.Web.UI.Page
                 HashPass.Value = FormsAuthentication.HashPasswordForStoringInConfigFile(PswBox.Text, "SHA1");
                 DataRow row = dv.Table.Rows[0];
                 string tempPass = (string)row["Password"];
-                string tempName = (string)row["UsrName"];
+                string tempName = (string)row["FirstName"] + " " + (string)row["LastName"];
                 string tempEmail = (string)row["Email"];
                 string tempId = row["UsrId"].ToString();
                 if (tempPass == HashPass.Value)
                 {
                     //authenticated password should not be stored in cookie
                     //ASP.NET_SessionId
+                    foreach (HttpCookie cookieTemp in Response.Cookies)
+                    {
+                        System.Diagnostics.Debug.Print(cookieTemp["Email"]);
+                        if (cookieTemp["Email"] == tempEmail)
+                        {
+
+                            Comment.Text = "Your account was logged in from other places!";
+                            return;
+                        }
+                    }
                     string sessionId = this.Session.SessionID;
                     HttpCookie cookie = new HttpCookie("sessionId");
                     cookie["Name"] = tempName;
@@ -73,7 +83,7 @@ public partial class Login : System.Web.UI.Page
                     cookie["Id"] = tempId;
                     Response.Cookies.Add(cookie);
                     Comment.Text = "Login success! Redirect to the main page in 5 second.";
-                    System.Threading.Thread.Sleep(5000);
+
                     if (RememberMe.Checked == true)
                     {
                         FormsAuthentication.RedirectFromLoginPage(tempEmail, true);
@@ -95,6 +105,7 @@ public partial class Login : System.Web.UI.Page
 
     protected void RetBut_Click(object sender, EventArgs e)
     {
+        FormsAuthentication.SignOut();
         Response.Redirect("Default.aspx");
     }
 
@@ -121,5 +132,10 @@ public partial class Login : System.Web.UI.Page
         {
             return false;
         }
+    }
+
+    protected void CrtAccBut_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("CreateAccount.aspx");
     }
 }

@@ -12,7 +12,7 @@
     <form id="form1" runat="server">
         <div class="main-panel">
 
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT UsrName, Password, Email, UsrId FROM [User] WHERE (Email = @val1)">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [User] WHERE (Email = @val1)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="EmailBox" Name="val1" PropertyName="Text" />
                 </SelectParameters>
@@ -35,6 +35,8 @@
             <br />
             <asp:Button ID="LoginBut" CssClass="button" runat="server" Text="Login" OnClick="LoginBut_Click" />
             <br />
+            <br />
+            <asp:Button ID="CrtAccBut" CssClass="button" runat="server" Text="Create Account" OnClick="CrtAccBut_Click" />
             <br />
             <br />
 

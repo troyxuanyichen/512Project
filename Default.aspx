@@ -37,7 +37,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Label ID="Comment" class="warning" runat="server" Text="" Visible="false"></asp:Label><br />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:DropDownList ID="UsrNameList" CssClass="dropdownlist" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource2" DataTextField="Name" DataValueField="Email">
+                <asp:DropDownList ID="UsrNameList" CssClass="dropdownlist" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource2" DataTextField="Email" DataValueField="Email">
                 </asp:DropDownList>            
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 
@@ -47,7 +47,7 @@
                 <asp:Button ID="ViewOtherProfileBut" class="button" runat="server" Text="View other Profile" OnClick="ViewOtherProfileBut_Click" />
             </div>
 
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT UsrId, UsrName, Password, Email FROM [User] WHERE (UsrId = @uid)" DeleteCommand="DELETE FROM [User] WHERE (UsrId = @val2)">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT UsrId, FirstName, MiddleName, LastName, Password, Email FROM [User] WHERE (UsrId = @uid)" DeleteCommand="DELETE FROM [User] WHERE (UsrId = @val2)">
                 <DeleteParameters>
                     <asp:ControlParameter ControlID="HiddenField1" Name="val2" PropertyName="Value" />
                 </DeleteParameters>

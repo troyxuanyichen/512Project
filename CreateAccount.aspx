@@ -11,14 +11,16 @@
 <body>
     <form id="form1" runat="server">
         <div class="main-panel">
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [User].* FROM [User]" InsertCommand="INSERT INTO [User] (UsrName, Password, Email) VALUES (@val1, @val2, @val3)">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [User].* FROM [User]" InsertCommand="INSERT INTO [User] (FirstName, MiddleName, LastName, Password, Email) VALUES (@val1, @val2, @val3, @val4, @val5)">
                 <InsertParameters>
-                    <asp:ControlParameter ControlID="UsrNameInput" Name="val1" PropertyName="Text" />
-                    <asp:ControlParameter ControlID="HashPass" Name="val2" PropertyName="Value" />
-                    <asp:ControlParameter ControlID="EmailInput" Name="val3" PropertyName="Text" />
+                    <asp:ControlParameter ControlID="FirstNameInput" Name="val1" PropertyName="Text" />
+                    <asp:ControlParameter ControlID="MiddleNameInput" Name="val2" PropertyName="Text" />
+                    <asp:ControlParameter ControlID="LastNameInput" Name="val3" PropertyName="Text" />
+                    <asp:ControlParameter ControlID="HashPass" Name="val4" PropertyName="Value" />
+                    <asp:ControlParameter ControlID="EmailInput" Name="val5" PropertyName="Text" />
                 </InsertParameters>
             </asp:SqlDataSource>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [User].* FROM [User] WHERE (Email = @val4)" >
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [User].* FROM [User] WHERE (Email = @val4)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="EmailInput" Name="val4" PropertyName="Text" />
                 </SelectParameters>
@@ -28,12 +30,21 @@
 
             <br />
             <br />
-            <asp:Label ID="UsrNameLabel" runat="server" Text="User Name"></asp:Label>
-            <asp:TextBox ID="UsrNameInput" runat="server" Width="128px"></asp:TextBox>
+            <asp:Label ID="FirstNameLabel" runat="server" Text="First Name"></asp:Label>
+            <asp:TextBox ID="FirstNameInput" runat="server"></asp:TextBox>
             <br />
             <br />
-            <asp:Label ID="PswLabel" runat="server" Text="Pass word"></asp:Label>
-            <asp:TextBox ID="PswInput" runat="server" TextMode="Password" Width="128px"></asp:TextBox>
+            <asp:Label ID="MiddleNameLabel" runat="server" Text="Middle Name"></asp:Label>
+            &nbsp;<asp:TextBox ID="MiddleNameInput" runat="server"></asp:TextBox>
+            (Can be empty)<br />
+            <br />
+            <asp:Label ID="LastNameLabel" runat="server" Text="Last Name"></asp:Label>
+            &nbsp;<asp:TextBox ID="LastNameInput" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Label ID="PswLabel" runat="server" Text="Password"></asp:Label>
+            <asp:TextBox ID="PswInput" runat="server" TextMode="Password"></asp:TextBox>
+            &nbsp;(At least 6 codewords)
             <br />
             <br />
             <asp:Label ID="EmailLabel" runat="server" Text="E-mail"></asp:Label>
@@ -43,6 +54,7 @@
             <asp:Button ID="SavBut" class="button" runat="server" Text="Save" OnClick="SavBut_Click" />
 
             &nbsp;<br />
+            <br />
             <asp:Button ID="BackBut" class="button" runat="server" Text="Back" OnClick="BackBut_Click" />
 
             <br />

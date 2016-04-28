@@ -12,16 +12,17 @@
     <form id="form1" runat="server">
         <div class="main-panel">
             <br />
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT ProfileId, Email, UsrId, Name, DOB, Address, Telephone, Gender, Privacy FROM Profile WHERE (Email = @TempEmail)">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM Profile WHERE (Email = @TempEmail)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="HiddenEmail" Name="TempEmail" PropertyName="Value" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT UsrId AS UsrIdAcc, UsrName AS UsrNameAcc, Email AS EmailAcc FROM [User] WHERE (Email = @val1)">
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT UsrId AS UsrIdAcc FROM [User] WHERE (Email = @val1)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="HiddenEmail" Name="val1" PropertyName="Value" />
                 </SelectParameters>
             </asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [States]"></asp:SqlDataSource>
             <asp:HiddenField ID="HiddenEmail" runat="server" />
             <br />
             <asp:Label ID="DOBLabel" runat="server" Text="Date of Birth"></asp:Label>
@@ -45,8 +46,16 @@
             <asp:TextBox ID="TelephoneInput" runat="server" TextMode="Phone"></asp:TextBox>
             <br />
             <br />
-            <asp:Label ID="AddressLabel" runat="server" Text="Address" Style="vertical-align: top;"></asp:Label>
-            <asp:TextBox ID="AddressInput" TextMode="MultiLine" runat="server"></asp:TextBox>
+            <asp:Label ID="StateLabel" runat="server" Text="State"></asp:Label>
+            &nbsp;<asp:DropDownList ID="StateList" runat="server" DataSourceID="SqlDataSource3" DataTextField="Name" DataValueField="Name">
+            </asp:DropDownList>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="CityLabel" runat="server" Text="City"></asp:Label>
+&nbsp;<asp:TextBox ID="CityInput" runat="server"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Label ID="StreetLabel" runat="server" Text="Street" Style="vertical-align: top;"></asp:Label>
+            <asp:TextBox ID="StreetInput" TextMode="MultiLine" runat="server"></asp:TextBox>
             <br />
             <asp:CheckBox ID="PrivacyInput" runat="server" Text="Prevent others from seeing my profile" />
             <br />

@@ -16,12 +16,17 @@ public partial class EditProfile : System.Web.UI.Page
     {
         string sessionId = this.Session.SessionID;
         HttpCookie cookie = Request.Cookies["sessionId"];
+        System.Diagnostics.Debug.Print(cookie["Id"]);
         if (cookie == null)
         {
-            Response.Redirect("Login.aspx");
+            Response.Redirect("../Login.aspx");
         }
         HiddenEmail.Value = cookie["Email"].ToString();
         action = Request.QueryString["action"];
+        if(Request.QueryString["action"] == null)
+        {
+            Response.Redirect("../Login.aspx");
+        }
         if (!Page.IsPostBack)
         {
             //bind the year and month
@@ -42,7 +47,9 @@ public partial class EditProfile : System.Web.UI.Page
                 string dayTemp = DateTime.Parse(DOBTemp).Day.ToString();
                 string genderTemp = row["Gender"].ToString();
                 string telephoneTemp = row["Telephone"].ToString();
-                string addressTemp = row["Address"].ToString();
+                string stateTemp = row["State"].ToString();
+                string cityTemp = row["City"].ToString();
+                string streetTemp = row["Street"].ToString();
                 string privacyTemp = row["Privacy"].ToString();
                 DayList.DataSource = Enumerable.Range(1, GetDate(int.Parse(yearTemp), int.Parse(monthTemp)));
                 DayList.DataBind();
@@ -51,7 +58,9 @@ public partial class EditProfile : System.Web.UI.Page
                 DayList.SelectedIndex = DayList.Items.IndexOf(DayList.Items.FindByValue(dayTemp));
                 GenderList.SelectedIndex = GenderList.Items.IndexOf(GenderList.Items.FindByValue(genderTemp));
                 TelephoneInput.Text = telephoneTemp;
-                AddressInput.Text = addressTemp;
+                StateList.SelectedIndex = (StateList.Items.IndexOf(StateList.Items.FindByValue(stateTemp)));
+                CityInput.Text = cityTemp;
+                StreetInput.Text = streetTemp;
                 if (privacyTemp == "N")
                 {
                     PrivacyInput.Checked = false;
@@ -84,7 +93,7 @@ public partial class EditProfile : System.Web.UI.Page
         int day = int.Parse(DayList.SelectedValue);
         DateTime dateTime = new DateTime(year, month, day);
         bool invalidDate = !dateVerify(dateTime);
-        bool emptyItem = ((TelephoneInput.Text == string.Empty) || (AddressInput.Text == string.Empty));
+        bool emptyItem = ((TelephoneInput.Text == string.Empty) || (StreetInput.Text == string.Empty));
         int telephoneTemp;
         bool invalidTelephone = ((TelephoneInput.Text.Length != 10) || (int.TryParse(TelephoneInput.Text, out telephoneTemp)));
         if (emptyItem)
@@ -113,7 +122,6 @@ public partial class EditProfile : System.Web.UI.Page
             {             
                 DataView dv = (DataView)SqlDataSource2.Select(DataSourceSelectArguments.Empty);
                 DataTable dataTable = dv.ToTable();
-                string Name = dataTable.Rows[0][1].ToString();
                 string uid = dataTable.Rows[0][0].ToString();
                 string privacyTemp;
                 if (PrivacyInput.Checked == false)
@@ -126,22 +134,24 @@ public partial class EditProfile : System.Web.UI.Page
                 }
                 if(action == "create")
                 {
-                    SqlDataSource1.InsertCommand = "INSERT INTO Profile(Email, UsrId, Name, DOB, Address, Telephone, Gender, Privacy) VALUES (@Val1, @Val2, @val3, @val4, @val5, @val6, @val7, @val8)";
+                    SqlDataSource1.InsertCommand = "INSERT INTO Profile(Email, UsrId, DOB, State, City, Street, Telephone, Gender, Privacy) VALUES (@Val1, @Val2, @val3, @val4, @val5, @val6, @val7, @val8, @val9)";
                     SqlDataSource1.InsertParameters.Add("Val1", HiddenEmail.Value);
-                    SqlDataSource1.InsertParameters.Add("Val2", uid);
-                    SqlDataSource1.InsertParameters.Add("Val3", Name);
-                    SqlDataSource1.InsertParameters.Add("Val4", dateTime.ToString());
-                    SqlDataSource1.InsertParameters.Add("Val5", AddressInput.Text);
-                    SqlDataSource1.InsertParameters.Add("Val6", TelephoneInput.Text);
-                    SqlDataSource1.InsertParameters.Add("Val7", GenderList.SelectedValue);
-                    SqlDataSource1.InsertParameters.Add("Val8", privacyTemp);
+                    SqlDataSource1.InsertParameters.Add("Val2", uid);             
+                    SqlDataSource1.InsertParameters.Add("Val3", dateTime.ToString());                   
+                    SqlDataSource1.InsertParameters.Add("Val4", StateList.SelectedValue.ToString());
+                    SqlDataSource1.InsertParameters.Add("Val5", CityInput.Text);
+                    SqlDataSource1.InsertParameters.Add("Val6", StreetInput.Text);
+                    SqlDataSource1.InsertParameters.Add("Val7", TelephoneInput.Text);
+                    SqlDataSource1.InsertParameters.Add("Val8", GenderList.SelectedValue);
+                    SqlDataSource1.InsertParameters.Add("Val9", privacyTemp);
                     SqlDataSource1.Insert();
                 }
                 else
                 {
-                    SqlDataSource1.UpdateCommand = "UPDATE Profile SET DOB = @DOBUpdate, Address = @AddressUpdate, Telephone = @TelephoneUpdate, Gender = @GenderUpdate, Privacy = @PrivacyUpdate WHERE (Email = @EmailUpdate)";
+                    SqlDataSource1.UpdateCommand = "UPDATE Profile SET DOB = @DOBUpdate, Street = @StreetUpdate, State = @StateUpdate, Telephone = @TelephoneUpdate, Gender = @GenderUpdate, Privacy = @PrivacyUpdate WHERE (Email = @EmailUpdate)";
                     SqlDataSource1.UpdateParameters.Add("DOBUpdate", dateTime.ToString());
-                    SqlDataSource1.UpdateParameters.Add("AddressUpdate", AddressInput.Text);
+                    SqlDataSource1.UpdateParameters.Add("StreetUpdate", StreetInput.Text);
+                    SqlDataSource1.UpdateParameters.Add("StateUpdate", StateList.SelectedValue.ToString());
                     SqlDataSource1.UpdateParameters.Add("TelephoneUpdate", TelephoneInput.Text);
                     SqlDataSource1.UpdateParameters.Add("GenderUpdate", GenderList.SelectedValue);
                     SqlDataSource1.UpdateParameters.Add("PrivacyUpdate", privacyTemp);
